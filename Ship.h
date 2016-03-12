@@ -16,7 +16,7 @@ public:
 
 protected:
 	virtual void GLRender() override = 0;
-	virtual void Update(float fDeltaTime) override = 0;
+	virtual void Update(int fDeltaTime) override = 0;
 
 	void RenderDebugShip(float fPosX, float fPosY);
 

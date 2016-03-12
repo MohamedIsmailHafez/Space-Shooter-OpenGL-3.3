@@ -4,6 +4,10 @@
 #include <string>
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
+#include <memory>
+#include "Mesh.h"
+#include "GameManager.h"
+
 
 class Renderer
 {
@@ -19,11 +23,15 @@ public:
 	virtual ~Renderer();
 
 	void Clear(GLfloat fRed, GLfloat fGreen, GLfloat fBlue, GLfloat fAlpha);
-	void Update();
+	void SwapBuffers() const;
 
 	bool IsClosed() const;
+	void SetClosed(bool fValue);
 
-	void RenderGameObjects();
+	void RenderGame(GameState fGameState);
+
+	int GetWidth() const { return mWidth; }
+	int GetHeight() const { return mHeight; }
 
 private:
 	Renderer(){}
@@ -31,12 +39,15 @@ private:
 	void operator=(const Renderer& other) {}
 
 	void PrintGPUSpecs();
+	void RenderGameObjects();
 
 	SDL_Window*		mWindow;
 	SDL_GLContext	mGLContext;
 	bool			mIsClosed;
+	int				mWidth;
+	int				mHeight;
+	std::unique_ptr<Mesh> mMesh;
 };
-
 
 #endif // RENDERER_H
 

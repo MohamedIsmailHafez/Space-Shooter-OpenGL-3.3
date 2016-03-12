@@ -16,7 +16,7 @@ public:
 	virtual ~GameObject(void);
 
 	virtual void GLRender();
-	virtual void Update(float fDeltaTime) = 0;
+	virtual void Update(int fDeltaTime) = 0;
 
 	glm::vec2 GetPosition() const { return mPosition; }
 	GameObjectType GetType() const { return mType; }
@@ -29,7 +29,6 @@ protected:
 
 	Transform mTransform;
 	std::unique_ptr<Texture> mTexture;
-	std::unique_ptr<Mesh> mMesh;
 };
 #endif //!GAMEOBJECT_H
 

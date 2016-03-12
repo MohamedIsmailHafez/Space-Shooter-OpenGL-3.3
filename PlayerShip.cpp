@@ -1,10 +1,11 @@
 #include "PlayerShip.h"
-
+#include "Bullet.h"
+#include "Renderer.h"
 
 PlayerShip::PlayerShip()
-	: Ship(glm::vec2(1280/2, 720/2), glm::vec2(), 0.0f, GameObjectType::PLAYER_SHIP)
+	: Ship(glm::vec2(Renderer::getInstance().GetWidth()/2.0f, Renderer::getInstance().GetHeight()/2.0f), glm::vec2(), 0.0f, GameObjectType::PLAYER_SHIP)
 {
-	mTexture = std::unique_ptr<Texture>(new Texture("./resources/textures/Ship.bmp"));
+	mTexture = std::unique_ptr<Texture>(new Texture("./resources/textures/PlayerShip.bmp"));
 }
 
 PlayerShip::~PlayerShip()
@@ -15,23 +16,9 @@ PlayerShip::~PlayerShip()
 void PlayerShip::GLRender()
 {
 	GameObject::GLRender();
-
-//	if(mIsDying)
-//	{
-//		GameTextureManager::getInstance().DrawTextured(0, 0, 256, 256, GameTextureManager::getInstance().explosionTex);
-//	}
-//	else
-//	{
-//#if DEBUG
-//		glColor3f(0,1,0);
-//		RenderDebugShip(mPosition.x, mPosition.y);
-//#else	
-//		GameTextureManager::getInstance().DrawTextured(0, 0, 64, 64, GameTextureManager::getInstance().Player_Ship_Texture);
-//#endif
-//	}
 }
 
-void PlayerShip::Update(float fDeltaTime)
+void PlayerShip::Update(int fDeltaTime)
 {
 	if(mIsDying)
 		mTimer -= 1.0f;
@@ -40,15 +27,15 @@ void PlayerShip::Update(float fDeltaTime)
 void PlayerShip::UpdateOrientation(SDL_MouseMotionEvent* motion)
 {
 	int x = motion->x;
-	int y = 720 - motion->y;
+	int y = motion->y;
 	
-	glm::vec2 dirVector = glm::vec2(x,y) - glm::vec2(1280.0f/2.0f, 720.0f/2.0f);
+	glm::vec2 dirVector = glm::vec2(x,y) - glm::vec2(Renderer::getInstance().GetWidth()/2.0f, Renderer::getInstance().GetHeight()/2.0f);
 	
 	float dirVectorMag = sqrtf((dirVector.x * dirVector.x) + (dirVector.y * dirVector.y));
 	
-	//mNormalizedDir = dirVector/dirVectorMag;
+	mNormalizedDir = dirVector/dirVectorMag;
 	
-	glm::vec2 shipUp(0,1);
+	glm::vec2 shipUp(0,-1);
 	
 	float dotProduct = (dirVector.x * shipUp.x) + (dirVector.y * shipUp.y);
 	
@@ -56,7 +43,7 @@ void PlayerShip::UpdateOrientation(SDL_MouseMotionEvent* motion)
 	
 	float angle = acos(cosAngle) * 180.f / 3.14f;
 	
-	SetDirectionAngle( x > 1280.f/2.f ? angle : -angle);
+	SetDirectionAngle( x > Renderer::getInstance().GetWidth()/2.f ? angle : -angle);
 }
 
 void PlayerShip::SetDirectionAngle(float fDirectionAngle)
@@ -67,8 +54,7 @@ void PlayerShip::SetDirectionAngle(float fDirectionAngle)
 	mDirectionangle = fDirectionAngle;
 }
 
-void PlayerShip::Fire(glm::vec2 fDirection)
+GameObject* PlayerShip::Fire()
 {
-	//Bullet* bullet = new Bullet(glm::vec2(GameConfig::getInstance().ScreenWidth/2, GameConfig::getInstance().ScreenHeight/2), fDirection);
-	//GameManager::getInstance().Add(bullet);
+	return (new Bullet(glm::vec2(Renderer::getInstance().GetWidth()/2, Renderer::getInstance().GetHeight()/2), mNormalizedDir));
 }

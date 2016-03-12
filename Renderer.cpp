@@ -1,8 +1,7 @@
 #include "Renderer.h"
 #include <iostream>
-#include "GameManager.h"
 
-void Renderer::Initialize(int fWidth, int fHeight, const std::string& fTitle)
+void Renderer::Initialize(int fWidth, int fHeight, const std::string& fTitle) 
 {
 	//SDL Stuff
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -15,6 +14,9 @@ void Renderer::Initialize(int fWidth, int fHeight, const std::string& fTitle)
 	{
 		std::clog << "SDL Initialization Succeeded." << std::endl;
 	}
+
+	mWidth = fWidth;
+	mHeight = fHeight;
 
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,	8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,	8);
@@ -49,6 +51,14 @@ void Renderer::Initialize(int fWidth, int fHeight, const std::string& fTitle)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	Vertex vertices[] = {	Vertex(glm::vec3( -0.5f, -0.5f, 0.0f), glm::vec2(0, 0) ),
+		Vertex(glm::vec3(  0.5f, -0.5f, 0.0f), glm::vec2(1, 0) ),
+		Vertex(glm::vec3(  0.5f,  0.5f, 0.0f), glm::vec2(1, 1) ),
+		Vertex(glm::vec3( -0.5f,  0.5f, 0.0f), glm::vec2(0, 1) )};
+
+
+	mMesh = std::unique_ptr<Mesh>(new Mesh(vertices, sizeof(vertices)/sizeof(vertices[0])));
+
 	std::clog << "Renderer Created Successfully" << std::endl;
 }
 
@@ -70,17 +80,9 @@ void Renderer::Clear(GLfloat fRed, GLfloat fGreen, GLfloat fBlue, GLfloat fAlpha
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer::Update()
+void Renderer::SwapBuffers() const
 {
 	SDL_GL_SwapWindow(mWindow);
-
-	SDL_Event e;
-
-	//while(SDL_PollEvent(&e))
-	//{
-	//	if(e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE)
-	//		mIsClosed = true;
-	//}
 }
 
 bool Renderer::IsClosed() const
@@ -98,15 +100,39 @@ void Renderer::PrintGPUSpecs()
 
 }
 
+void Renderer::SetClosed(bool fValue)
+{
+	mIsClosed = fValue;
+}
+
 //=======================================================================
 // Render List of Game Objects 
 //=======================================================================
+void Renderer::RenderGame(GameState fGameState)
+{
+	switch (fGameState)
+	{
+	case GameState::GAMEPLAY:
+		RenderGameObjects();
+		break;
+
+	case GameState::GAMEOVER:
+		break;
+
+	default:
+		break;
+	}
+	
+}
+
 void Renderer::RenderGameObjects()
 {
 	auto gameObjects = GameManager::getInstance().GetGameObjects();
-	
+
 	for(GameObject* object : gameObjects)
 	{
 		object->GLRender();
+
+		mMesh->Draw();
 	}
 }

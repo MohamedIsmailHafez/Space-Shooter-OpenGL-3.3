@@ -13,9 +13,11 @@ public:
 
 
 protected:
-	virtual void Update(float fDeltaTime) override;
+	virtual void Update(int fDeltaTime) override;
 
 private:
 	int mLevel;
+
+	static const float SPEED;
 };
 #endif //!ENEMYSHIP_H

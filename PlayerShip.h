@@ -7,6 +7,8 @@
 #include <memory>
 #include "SDL2\SDL_events.h"
 
+class Bullet;
+
 class PlayerShip : public Ship
 {
 public:
@@ -14,13 +16,16 @@ public:
 	virtual ~PlayerShip();
 
 	void SetDirectionAngle(float fDirectionAngle);
-	void Fire(glm::vec2 fDirection);
+	GameObject* Fire();
 
 	virtual void GLRender() override;
 
 	void UpdateOrientation(SDL_MouseMotionEvent* motion);
 
 protected:
-	virtual void Update(float fDeltaTime) override;
+	virtual void Update(int fDeltaTime) override;
+
+private:
+	glm::vec2 mNormalizedDir;
 };
 #endif
