@@ -18,14 +18,6 @@ Ship::~Ship()
 //=======================================================================
 void Ship::RenderDebugShip(float fPosX, float fPosY)
 {
-	//float size = 20.f;
-	//glTranslatef(-fPosX, -fPosY, 0);
-
-	//glBegin(GL_LINE_LOOP);
-	//glVertex2f(fPosX, fPosY + 2.0f*size);
-	//glVertex2f(fPosX + size, fPosY - size);
-	//glVertex2f(fPosX - size, fPosY - size);
-	//glEnd();
 }
 
 

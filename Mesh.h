@@ -6,9 +6,17 @@
 
 struct Vertex
 {
+	Vertex(){};
+
 	Vertex(const glm::fvec3& pos, const glm::vec2& texCoord)
 	{
 		this->pos = pos;
+		this->texCoord = texCoord;
+	}
+
+	Vertex(const glm::fvec2& pos, const glm::vec2& texCoord)
+	{
+		this->pos = glm::vec3(pos, 0.0f);
 		this->texCoord = texCoord;
 	}
 

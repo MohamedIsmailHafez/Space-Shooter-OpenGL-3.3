@@ -55,9 +55,11 @@ void Renderer::Initialize(int fWidth, int fHeight, const std::string& fTitle)
 		Vertex(glm::vec3(  0.5f, -0.5f, 0.0f), glm::vec2(1, 0) ),
 		Vertex(glm::vec3(  0.5f,  0.5f, 0.0f), glm::vec2(1, 1) ),
 		Vertex(glm::vec3( -0.5f,  0.5f, 0.0f), glm::vec2(0, 1) )};
-
-
+	
+	
 	mMesh = std::unique_ptr<Mesh>(new Mesh(vertices, sizeof(vertices)/sizeof(vertices[0])));
+
+	mShader.Load("./resources/shaders/basicShader");
 
 	std::clog << "Renderer Created Successfully" << std::endl;
 }
@@ -127,6 +129,8 @@ void Renderer::RenderGame(GameState fGameState)
 
 void Renderer::RenderGameObjects()
 {
+	mShader.Bind();
+
 	auto gameObjects = GameManager::getInstance().GetGameObjects();
 
 	for(GameObject* object : gameObjects)

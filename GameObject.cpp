@@ -25,7 +25,7 @@ void GameObject::GLRender()
 
 	glm::mat4 ModelProjection = projection * mTransform.GetModelMatrix();
 
-	Shader::getInstance().Update(ModelProjection);
+	Renderer::getInstance().getShader()->Update(ModelProjection);
 
 	mTexture->Bind(0);
 }

@@ -9,18 +9,13 @@ class Shader
 {
 public:
 
-	static Shader& getInstance()
-	{
-		static Shader instance;
-		return instance;
-	}
-
 	void Load(const std::string& fileName);
 
 	void Bind();
 
-	//void Update(const Transform& trans);
 	void Update(const glm::mat4& trans);
+
+	Shader();
 
 	virtual ~Shader();
 
@@ -31,7 +26,6 @@ private:
 		FRAGMENT_SHADER = 1
 	};
 
-	Shader() {}
 	Shader(const Shader& other);
 	void operator=(const Shader& other);
 

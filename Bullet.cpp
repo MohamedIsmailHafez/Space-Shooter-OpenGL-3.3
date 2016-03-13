@@ -18,5 +18,5 @@ void Bullet::GLRender()
 
 void Bullet::Update(int fDeltaTime)
 {
-	mPosition += mDirection * 200.f * (float)fDeltaTime/1000.f;
+	mPosition += mDirection * 1000.f * (float)fDeltaTime/1000.f;
 }

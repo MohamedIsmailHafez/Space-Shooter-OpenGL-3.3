@@ -2,6 +2,10 @@
 #include <iostream>
 #include <fstream>
 
+Shader::Shader()
+{
+
+}
 
 void Shader::Load(const std::string& fileName)
 {

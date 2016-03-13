@@ -91,6 +91,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="stb_image.c" />
+    <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
@@ -106,6 +107,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
@@ -113,6 +115,8 @@
     <None Include="ClassDiagram.cd" />
     <None Include="resources\shaders\basicShader.fs" />
     <None Include="resources\shaders\basicShader.vs" />
+    <None Include="Text2DShader.fs" />
+    <None Include="Text2DShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Space Shooter.rc" />

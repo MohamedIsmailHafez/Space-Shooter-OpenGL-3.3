@@ -1,23 +1,14 @@
-#include <iostream>
-#include <GL/glew.h>
 #include "Renderer.h"
-#include "Shader.h"
-#include "Mesh.h"
-#include "Texture.h"
-#include <memory>
 #include "PlayerShip.h"
 #include "GameManager.h"
-#include "EnemyShip.h"
+#include "TextRenderer.h"
+
 
 int main(int argc, char** argv)
 {
 	Renderer& renderer = Renderer::getInstance();
 
 	renderer.Initialize(1280, 720, "Space Shooter");
-
-	Shader& shader = Shader::getInstance();
-
-	shader.Load("./resources/shaders/basicShader");
 
 	GameManager& manager = GameManager::getInstance();
 
@@ -31,9 +22,9 @@ int main(int argc, char** argv)
 
 		renderer.Clear(0.0f, 0.0f, 0.0f, 1.0f);
 
-		shader.Bind();
+		renderer.RenderGame(manager.GetGameState());
 
-		renderer.RenderGameObjects(manager.GetGameState());
+		TextRenderer::getInstance().Print("Hello World !", 10, 200, 60);
 
 		renderer.SwapBuffers();
 	}

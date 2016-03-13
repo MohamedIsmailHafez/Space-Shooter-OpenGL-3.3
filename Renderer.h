@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 #include <memory>
 #include "Mesh.h"
+#include "Shader.h"
 #include "GameManager.h"
 
 
@@ -33,6 +34,8 @@ public:
 	int GetWidth() const { return mWidth; }
 	int GetHeight() const { return mHeight; }
 
+	Shader* getShader() {return &mShader;}
+
 private:
 	Renderer(){}
 	Renderer(const Renderer& other) {}
@@ -47,6 +50,7 @@ private:
 	int				mWidth;
 	int				mHeight;
 	std::unique_ptr<Mesh> mMesh;
+	Shader	mShader;
 };
 
 #endif // RENDERER_H
