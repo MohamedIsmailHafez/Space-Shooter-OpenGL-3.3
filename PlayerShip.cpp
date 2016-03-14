@@ -2,10 +2,15 @@
 #include "Bullet.h"
 #include "Renderer.h"
 
+Texture* PlayerShip::GetPlayerTexture()
+{
+	static Texture* texture(new Texture("./resources/textures/PlayerShip.bmp"));
+	return texture;
+}
+
 PlayerShip::PlayerShip()
 	: Ship(glm::vec2(Renderer::getInstance().GetWidth()/2.0f, Renderer::getInstance().GetHeight()/2.0f), glm::vec2(), 0.0f, GameObjectType::PLAYER_SHIP)
 {
-	mTexture = std::unique_ptr<Texture>(new Texture("./resources/textures/PlayerShip.bmp"));
 }
 
 PlayerShip::~PlayerShip()
@@ -15,6 +20,10 @@ PlayerShip::~PlayerShip()
 
 void PlayerShip::GLRender()
 {
+	mTransform.SetScale(glm::vec3(GetPlayerTexture()->GetTextureWidth(), GetPlayerTexture()->GetTextureHeight(), 0));
+
+	GetPlayerTexture()->Bind(0);
+
 	GameObject::GLRender();
 }
 

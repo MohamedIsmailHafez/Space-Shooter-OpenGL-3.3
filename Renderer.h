@@ -43,6 +43,8 @@ private:
 
 	void PrintGPUSpecs();
 	void RenderGameObjects();
+	void RenderScore();
+	void RenderGameOverScreen();
 
 	SDL_Window*		mWindow;
 	SDL_GLContext	mGLContext;
@@ -51,6 +53,7 @@ private:
 	int				mHeight;
 	std::unique_ptr<Mesh> mMesh;
 	Shader	mShader;
+	Uint32 mLastFrameTime;
 };
 
 #endif // RENDERER_H

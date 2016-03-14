@@ -26,6 +26,9 @@ public:
 	void UpdateGameObjects();
 	GameState GetGameState() { return mGameState; }
 
+	int GetScore() const;
+
+	
 private:
 	GameManager();
 	virtual ~GameManager();
@@ -37,10 +40,12 @@ private:
 	bool OutofBounds(const glm::vec2& fPosition);
 
 	float Distance(const glm::vec2& fPosition1, const glm::vec2& fPosition2);
+	void UpdateScore();
 	PlayerShip* mPlayerShip;
 	std::vector<GameObject*> GameObjects;
 	SDL_TimerID mTimerID;
 	int previousTime;
 	GameState mGameState;
+	int mScore;
 };
 #endif  //!GAMEMANAGER_H

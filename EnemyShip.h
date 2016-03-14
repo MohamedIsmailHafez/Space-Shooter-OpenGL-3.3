@@ -19,5 +19,6 @@ private:
 	int mLevel;
 
 	static const float SPEED;
+	static Texture* GetEnemyTexture();
 };
 #endif //!ENEMYSHIP_H

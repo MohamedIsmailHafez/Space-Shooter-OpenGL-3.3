@@ -17,8 +17,9 @@ public:
 	int GetTextureHeight() const { return mTextureHeight; }
 
 private:
-	GLuint mTexture; //OpenGL Texture Handle.
 	int mTextureWidth;
 	int mTextureHeight;
+
+	GLuint mTexture; //OpenGL Texture Handle.
 };
 #endif	//!TEXTURE_H

@@ -21,6 +21,7 @@ public:
 	glm::vec2 GetPosition() const { return mPosition; }
 	GameObjectType GetType() const { return mType; }
 
+
 protected:
 	glm::vec2	mPosition;
 	glm::vec2	mDirection;
@@ -29,6 +30,9 @@ protected:
 
 	Transform mTransform;
 	std::unique_ptr<Texture> mTexture;
+
+	static Texture* GetExplosionTexture();
+
 };
 #endif //!GAMEOBJECT_H
 

@@ -1,8 +1,6 @@
 #include "Renderer.h"
 #include "PlayerShip.h"
 #include "GameManager.h"
-#include "TextRenderer.h"
-
 
 int main(int argc, char** argv)
 {
@@ -23,10 +21,6 @@ int main(int argc, char** argv)
 		renderer.Clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 		renderer.RenderGame(manager.GetGameState());
-
-		TextRenderer::getInstance().Print("Hello World !", 10, 200, 60);
-
-		renderer.SwapBuffers();
 	}
 
 	return 0;

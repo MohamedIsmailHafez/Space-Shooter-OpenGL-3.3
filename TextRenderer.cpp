@@ -7,7 +7,7 @@
 TextRenderer::TextRenderer()
 {
 	mShader.Load("./resources/shaders/Text2DShader");
-	mFontTexture = new Texture("./resources/fonts/ExportedFont.bmp");
+	mFontTexture = new Texture("./resources/fonts/font.tga");
 }
 
 TextRenderer::~TextRenderer()

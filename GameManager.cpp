@@ -35,6 +35,8 @@ void GameManager::Initialize(PlayerShip* fShip)
 
 	mPlayerShip = fShip;
 
+	mScore = 0;
+
 	GameObjects.push_back(mPlayerShip);
 
 	srand((unsigned int)time(NULL));
@@ -146,7 +148,7 @@ void GameManager::UpdateGameObjects()
 						{
 							GameObjects.erase(std::find(GameObjects.begin(), GameObjects.end(), obj));
 							enemy->SetDying(true);
-							//UpdateScore();
+							UpdateScore();
 							return;
 						}
 			
@@ -194,4 +196,14 @@ bool GameManager::OutofBounds(const glm::vec2& fPosition)
 float GameManager::Distance(const glm::vec2& fPosition1, const glm::vec2& fPosition2)
 {
 	return sqrt( (fPosition2.x - fPosition1.x)*((fPosition2.x - fPosition1.x)) + ((fPosition2.y - fPosition1.y))*((fPosition2.y - fPosition1.y)) );
+}
+
+int GameManager::GetScore() const
+{
+	return mScore;
+}
+
+void GameManager::UpdateScore()
+{
+	mScore += SDL_GetTicks()/2000;
 }

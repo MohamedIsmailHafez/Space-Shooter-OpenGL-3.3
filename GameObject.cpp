@@ -1,6 +1,13 @@
 #include "GameObject.h"
 #include "Shader.h"
 #include "Renderer.h"
+#include "EnemyShip.h"
+
+Texture* GameObject::GetExplosionTexture()
+{
+	static Texture* texture(new Texture("./resources/textures/Explosion.bmp"));
+	return texture;
+}
 
 GameObject::GameObject(const glm::vec2& fPosition, const glm::vec2& fDirection, float fDirectionAngle, GameObjectType fType)
 	: mPosition(fPosition), mDirection(fDirection), mDirectionangle(fDirectionAngle), mType(fType), mTexture(nullptr)
@@ -17,8 +24,6 @@ void GameObject::GLRender()
 {
 	glm::mat4 projection = glm::ortho(0.0f, (float)Renderer::getInstance().GetWidth(), (float)Renderer::getInstance().GetHeight(), 0.0f);
 
-	mTransform.SetScale(glm::vec3(mTexture->GetTextureWidth(), mTexture->GetTextureHeight(), 0));
-
 	mTransform.SetPosition(glm::vec3(GetPosition(), 0.0f));
 
 	mTransform.SetRotation(glm::vec3(0,0,mDirectionangle));
@@ -27,5 +32,8 @@ void GameObject::GLRender()
 
 	Renderer::getInstance().getShader()->Update(ModelProjection);
 
-	mTexture->Bind(0);
+	auto enemyShip = dynamic_cast<EnemyShip*>(this);
+
+	if(enemyShip && enemyShip->IsDying())
+		GetExplosionTexture()->Bind(0);
 }

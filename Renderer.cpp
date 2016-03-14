@@ -1,5 +1,7 @@
 #include "Renderer.h"
 #include <iostream>
+#include "TextRenderer.h"
+#include <sstream>
 
 void Renderer::Initialize(int fWidth, int fHeight, const std::string& fTitle) 
 {
@@ -61,6 +63,8 @@ void Renderer::Initialize(int fWidth, int fHeight, const std::string& fTitle)
 
 	mShader.Load("./resources/shaders/basicShader");
 
+	mLastFrameTime = 0;
+
 	std::clog << "Renderer Created Successfully" << std::endl;
 }
 
@@ -112,19 +116,30 @@ void Renderer::SetClosed(bool fValue)
 //=======================================================================
 void Renderer::RenderGame(GameState fGameState)
 {
-	switch (fGameState)
+	Uint32 currentTime = SDL_GetTicks();
+	Uint32 timeElapsed = currentTime - mLastFrameTime;
+
+	if(timeElapsed >= 16)
 	{
-	case GameState::GAMEPLAY:
-		RenderGameObjects();
-		break;
+		switch (fGameState)
+		{
+		case GameState::GAMEPLAY:
+			RenderGameObjects();
+			RenderScore();
+			break;
 
-	case GameState::GAMEOVER:
-		break;
+		case GameState::GAMEOVER:
+			RenderGameOverScreen();
+			break;
 
-	default:
-		break;
+		default:
+			break;
+		}
+
+		SwapBuffers();
+		
+		mLastFrameTime = currentTime;
 	}
-	
 }
 
 void Renderer::RenderGameObjects()
@@ -139,4 +154,19 @@ void Renderer::RenderGameObjects()
 
 		mMesh->Draw();
 	}
+}
+
+void Renderer::RenderScore()
+{
+	std::stringstream stringStreamScore;
+	stringStreamScore << "Score: " << GameManager::getInstance().GetScore();
+	std::string scoreString = stringStreamScore.str();
+	char* charTypeScore = (char*)scoreString.c_str();
+
+	TextRenderer::getInstance().Print(charTypeScore, mWidth - (375), mHeight - (50), 30);
+}
+
+void Renderer::RenderGameOverScreen()
+{
+	TextRenderer::getInstance().Print("Game Over", mWidth/2, mHeight/2, 30);
 }

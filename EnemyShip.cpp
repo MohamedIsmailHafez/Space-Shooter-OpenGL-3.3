@@ -1,14 +1,17 @@
 #include "EnemyShip.h"
 #include "Renderer.h"
 
-const float EnemyShip::SPEED = 100;
+const float EnemyShip::SPEED = 200;
+
+Texture* EnemyShip::GetEnemyTexture()
+{
+	static Texture* texture(new Texture("./resources/textures/EnemyShip.bmp"));
+	return texture;
+}
 
 EnemyShip::EnemyShip(const glm::vec2& fPosition, const glm::vec2& fDirection, float fDirectionAngle, int fLevel)
 	: Ship(fPosition, fDirection, fDirectionAngle, GameObjectType::ENEMY_SHIP), mLevel(fLevel)
 {
-
-	mTexture = std::unique_ptr<Texture>(new Texture("./resources/textures/EnemyShip.bmp"));
-
 	glm::vec2 dirVector = glm::vec2(Renderer::getInstance().GetWidth()/2.0f, Renderer::getInstance().GetHeight()/2.0f) - mPosition;
 
 	dirVector = glm::normalize(dirVector);
@@ -30,6 +33,10 @@ EnemyShip::~EnemyShip(void)
 
 void EnemyShip::GLRender()
 {
+	mTransform.SetScale(glm::vec3(GetEnemyTexture()->GetTextureWidth(), GetEnemyTexture()->GetTextureHeight(), 0));
+
+	GetEnemyTexture()->Bind(0);
+
 	GameObject::GLRender();
 }
 
@@ -38,5 +45,5 @@ void EnemyShip::Update(int fDeltaTime)
 	mPosition += mDirection * SPEED * (float)fDeltaTime/1000.f;
 
 	if(mIsDying)
-		mTimer -= 0.06f;
+		mTimer -= 7.5f * (float)fDeltaTime/1000.f;
 }

@@ -14,5 +14,8 @@ public:
 protected:
 	virtual void Update(int fDeltaTime) override;
 
+private:
+	static Texture* GetBulletTexture();
+
 };
 #endif //!BULLET_H

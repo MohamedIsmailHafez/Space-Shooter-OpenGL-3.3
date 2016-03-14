@@ -27,5 +27,6 @@ protected:
 
 private:
 	glm::vec2 mNormalizedDir;
+	static Texture* GetPlayerTexture();
 };
 #endif
